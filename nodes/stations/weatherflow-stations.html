@@ -1,0 +1,30 @@
+<script type="text/javascript">
+    RED.nodes.registerType('weatherflow-stations', {
+        category: 'WeatherFlow',
+        color: '#c498cd',
+        inputs: 1,
+        outputs: 1,
+        defaults: {
+            client: { value: "", type: "weatherflow-client" }
+        },
+        icon: "white-globe.svg",
+        label: function () {
+            return this.name || "WeatherFlow Stations";
+        },
+        paletteLabel: "Stations"
+    });
+</script>
+
+<script type="text/html" data-template-name="weatherflow-stations">
+    <div class="form-row">
+        <label for="node-input-client"><i class="fa fa-tag"></i> Client</label>
+        <input type="text" id="node-input-client" placeholder="Client">
+    </div>
+</script>
+
+
+<script type="text/html" data-help-name="weatherflow-stations">
+    <p>Retrieve a list of your stations along with all connected devices.</p>
+    <h3>Inputs</h3>
+    <h3>Outputs</h3>
+</script>
