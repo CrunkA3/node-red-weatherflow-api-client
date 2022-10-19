@@ -1,0 +1,247 @@
+<script type="text/javascript">
+    RED.nodes.registerType('weatherflow-forecast', {
+        category: 'WeatherFlow',
+        color: '#c498cd',
+        inputs: 1,
+        outputs: 1,
+        defaults: {
+            client: { value: "", type: "weatherflow-client", required: true },
+            station: { value: "", required: true, validate: RED.validators.typedInput('stationType') },
+            stationType: { value: "" },
+            units_temp: { value: "" },
+            units_wind: { value: "" },
+            units_pressure: { value: "" },
+            units_precip: { value: "" },
+            units_distance: { value: "" }
+        },
+        icon: "white-globe.svg",
+        label: function () {
+            return this.name || "WeatherFlow Forecast";
+        },
+        paletteLabel: "Forecast",
+        oneditprepare: function () {
+            $("#node-input-station").typedInput({
+                default: "msg",
+                types: ["msg", "str"],
+                typeField: "#node-input-stationType"
+            });
+
+            $("#node-input-units_temp").typedInput({
+                types: [
+                    {
+                        value: "unit",
+                        options: [
+                            { value: "c", label: "Celsius" },
+                            { value: "f", label: "Fahrenheit" },
+                        ]
+                    }
+                ]
+            });
+
+            $("#node-input-units_wind").typedInput({
+                types: [
+                    {
+                        value: "unit",
+                        options: [
+                            { value: "mps", label: "mps" },
+                            { value: "mph", label: "mph" },
+                            { value: "kph", label: "kph" },
+                            { value: "kts", label: "kts" },
+                            { value: "bft", label: "bft" },
+                            { value: "lfm", label: "lfm" },
+                        ]
+                    }
+                ]
+            });
+
+            $("#node-input-units_pressure").typedInput({
+                types: [
+                    {
+                        value: "unit",
+                        options: [
+                            { value: "mb", label: "mb" },
+                            { value: "inhg", label: "inhg" },
+                            { value: "mmhg", label: "mmhg" },
+                            { value: "hpa", label: "hpa" }
+                        ]
+                    }
+                ]
+            });
+
+            $("#node-input-units_precip").typedInput({
+                types: [
+                    {
+                        value: "unit",
+                        options: [
+                            { value: "mm", label: "mm" },
+                            { value: "cm", label: "cm" },
+                            { value: "in", label: "in" }
+                        ]
+                    }
+                ]
+            });
+
+            $("#node-input-units_distance").typedInput({
+                types: [
+                    {
+                        value: "unit",
+                        options: [
+                            { value: "km", label: "km" },
+                            { value: "mi", label: "mi" }
+                        ]
+                    }
+                ]
+            });
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="weatherflow-forecast">
+    <div class="form-row">
+        <label for="node-input-client"><i class="fa fa-tag"></i> Client</label>
+        <input type="text" id="node-input-client" placeholder="Client">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-station"><i class="fa fa-tag"></i> station</label>
+        <input type="text" id="node-input-station" placeholder="Station">
+        <input type="hidden" id="node-input-stationType">
+
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-units_temp"><i class="fa fa-tag"></i> Temperature units</label>
+        <input type="text" id="node-input-units_temp">
+    </div>
+    <div class="form-row">
+        <label for="node-input-units_wind"><i class="fa fa-tag"></i> Wind units</label>
+        <input type="text" id="node-input-units_wind">
+    </div>
+    <div class="form-row">
+        <label for="node-input-units_pressure"><i class="fa fa-tag"></i> Pressure units</label>
+        <input type="text" id="node-input-units_pressure">
+    </div>
+    <div class="form-row">
+        <label for="node-input-units_precip"><i class="fa fa-tag"></i> Precipation units</label>
+        <input type="text" id="node-input-units_precip">
+    </div>
+    <div class="form-row">
+        <label for="node-input-units_distance"><i class="fa fa-tag"></i> Distance units</label>
+        <input type="text" id="node-input-units_distance">
+    </div>
+</script>
+
+
+<script type="text/html" data-help-name="weatherflow-forecast">
+    <p>The forecast includes current conditions, daily forecast and hourly forecast.</p>
+    <h3>Inputs</h3>
+    <p>optionally contains the station id</p>
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">json</span></dt>
+                <dd>the response message with the list of stations
+                    <code>
+                        <pre>
+{
+    "status": {
+        "status_code": 0,
+        "status_message": "SUCCESS"
+    },
+    "current_conditions": {
+        "time": 1608668142,
+        "conditions": "Clear",
+        "icon": "clear-day",
+        "air_temperature": 67,
+        "sea_level_pressure": 30.195,
+        "station_pressure": 30.079,
+        "pressure_trend": "falling",
+        "relative_humidity": 55,
+        "wind_avg": 3.2,
+        "wind_direction": 15,
+        "wind_direction_cardinal": "NNE",
+        "wind_direction_icon": "wind-rose-nne",
+        "wind_gust": 3.4,
+        "solar_radiation": 22,
+        "uv": 0,
+        "brightness": 2582,
+        "feels_like": 68.9,
+        "dew_point": 50,
+        "wet_bulb_temperature": 57,
+        "delta_t": 10,
+        "air_density": 0.08,
+        "lightning_strike_count_last_1hr": 0,
+        "lightning_strike_count_last_3hr": 1,
+        "lightning_strike_last_distance": 7,
+        "lightning_strike_last_distance_msg": "6 - 8 mi",
+        "lightning_strike_last_epoch": 1608150959,
+        "precip_accum_local_day": 0,
+        "precip_accum_local_yesterday": 0,
+        "precip_minutes_local_day": 0,
+        "precip_minutes_local_yesterday": 0,
+        "is_precip_local_day_rain_check": false,
+        "is_precip_local_yesterday_rain_check": true
+    },
+    "forecast": {
+        "daily": [
+        {
+            "day_start_local": 1608699600,
+            "day_num": 23,
+            "month_num": 12,
+            "conditions": "Clear",
+            "icon": "clear-day",
+            "sunrise": 1608639322,
+            "sunset": 1608676362,
+            "air_temp_high": 73,
+            "air_temp_low": 39,
+            "precip_probability": 10,
+            "precip_icon": "chance-rain",
+            "precip_type": "rain"
+        }
+        ],
+        "hourly": [
+        {
+            "time": 1608735600,
+            "conditions": "Clear",
+            "icon": "clear-day",
+            "air_temperature": 57,
+            "sea_level_pressure": 30.257,
+            "relative_humidity": 82,
+            "precip": 0,
+            "precip_probability": 0,
+            "wind_avg": 2,
+            "wind_direction": 34,
+            "wind_direction_cardinal": "NE",
+            "wind_gust": 3,
+            "uv": 2,
+            "feels_like": 57,
+            "local_hour": 10,
+            "local_day": 23
+        }
+        ]
+    },
+    "units": {
+        "units_temp": "f",
+        "units_wind": "mph",
+        "units_precip": "in",
+        "units_pressure": "inhg",
+        "units_distance": "mi",
+        "units_brightness": "lux",
+        "units_solar_radiation": "w/m2",
+        "units_other": "imperial",
+        "units_air_density": "lbs/ft3"
+    },
+    "latitude": 29.00724,
+    "longitude": -80.88067,
+    "timezone": "America/New_York",
+    "timezone_offset_minutes": -300
+    }
+                        </pre>
+                    </code>
+                </dd>   
+            </dl>
+
+        </li>
+    </ol>
+</script>

@@ -16,7 +16,8 @@
         "version": ">=1.2.9",
         "nodes": {
             "weatherflow-client": "nodes/client/weatherflow-client.js",
-            "weatherflow-stations": "nodes/stations/weatherflow-stations.js"
+            "weatherflow-stations": "nodes/stations/weatherflow-stations.js",
+            "weatherflow-forecast": "nodes/forecast/weatherflow-forecast.js"
         }
     },
     "engines": {
