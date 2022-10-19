@@ -1,0 +1,85 @@
+[
+    {
+        "id": "b87d8ad40bc3cedd",
+        "type": "weatherflow-stations",
+        "z": "f637cdfff5dfa2ad",
+        "client": "d116345ce6b8b3f8",
+        "x": 360,
+        "y": 440,
+        "wires": [
+            [
+                "e18471c67e9c7774"
+            ]
+        ]
+    },
+    {
+        "id": "7f2bc15456054ee2",
+        "type": "inject",
+        "z": "f637cdfff5dfa2ad",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 440,
+        "wires": [
+            [
+                "b87d8ad40bc3cedd"
+            ]
+        ]
+    },
+    {
+        "id": "bef0af70d550ccb7",
+        "type": "debug",
+        "z": "f637cdfff5dfa2ad",
+        "name": "debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "e18471c67e9c7774",
+        "type": "weatherflow-forecast",
+        "z": "f637cdfff5dfa2ad",
+        "client": "d116345ce6b8b3f8",
+        "station": "payload.stations[0].station_id",
+        "stationType": "msg",
+        "units_temp": "c",
+        "units_wind": "kph",
+        "units_pressure": "mb",
+        "units_precip": "mm",
+        "units_distance": "km",
+        "x": 600,
+        "y": 440,
+        "wires": [
+            [
+                "bef0af70d550ccb7"
+            ]
+        ]
+    },
+    {
+        "id": "d116345ce6b8b3f8",
+        "type": "weatherflow-client",
+        "name": "Default"
+    }
+]
