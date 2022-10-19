@@ -8,6 +8,8 @@ module.exports = function (RED) {
         node.client = RED.nodes.getNode(config.client);
 
         node.on('input', function (msg, send, done) {
+            var input = this;
+
             var options = {
                 host: 'swd.weatherflow.com',
                 path: '/swd/rest/stations?token=' + node.client.token
@@ -16,29 +18,28 @@ module.exports = function (RED) {
             callback = function (response) {
                 var str = '';
 
-                //another chunk of data has been received, so append it to `str`
                 response.on('data', function (chunk) {
                     str += chunk;
                 });
 
-                //the whole response has been received, so we just print it out here
                 response.on('end', function () {
-                    console.log(str);
+                    msg.payload = JSON.parse(str);
+                    if (msg.payload.status.status_code == 0) {
+                        send(msg);
+                        done();
+                    }
+                    else {
+                        done(msg);
+                    }
                 });
             }
 
-            http.request(options, callback).end();
-
-            // If an error is hit, report it to the runtime
-            if (err) {
-                if (done) {
-                    // Node-RED 1.0 compatible
-                    done(err);
-                } else {
-                    // Node-RED 0.x compatible
-                    node.error(err, msg);
-                }
-            }
+            http
+                .request(options, callback)
+                .on("error", (e) => {
+                    done('problem with request: ${e.message}');
+                })
+                .end();
         });
     }
 

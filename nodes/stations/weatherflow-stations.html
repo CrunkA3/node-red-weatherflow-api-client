@@ -26,5 +26,140 @@
 <script type="text/html" data-help-name="weatherflow-stations">
     <p>Retrieve a list of your stations along with all connected devices.</p>
     <h3>Inputs</h3>
+    <p>only for triggering the request</p>
     <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">json</span></dt>
+                <dd>the response message with the list of stations
+                    <code>
+                        <pre>
+{
+    "stations": [{
+            "location_id": 1,
+            "station_id": 1,
+            "name": "Name",
+            "public_name": "Name",
+            "latitude": 48.12345,
+            "longitude": 11.12345,
+            "timezone": "Europe/Berlin",
+            "timezone_offset_minutes": 120,
+            "station_meta": {
+                "share_with_wf": true,
+                "share_with_wu": true,
+                "elevation": 123.456789
+            },
+            "last_modified_epoch": 1657730842,
+            "created_epoch": 1657707922,
+            "devices": [{
+                    "device_id": 1,
+                    "serial_number": "HB-00000001",
+                    "location_id": 1,
+                    "device_meta": {
+                        "agl": 1.8288,
+                        "name": "HB-00000001",
+                        "environment": "indoor",
+                        "wifi_network_name": ""
+                    },
+                    "device_type": "HB",
+                    "hardware_revision": "1",
+                    "firmware_revision": "177"
+                }, {
+                    "device_id": 2,
+                    "serial_number": "ST-00000002",
+                    "location_id": 1,
+                    "device_meta": {
+                        "agl": 5.0,
+                        "name": "Name",
+                        "environment": "outdoor",
+                        "wifi_network_name": ""
+                    },
+                    "device_settings": {
+                        "show_precip_final": true
+                    },
+                    "device_type": "ST",
+                    "hardware_revision": "1",
+                    "firmware_revision": "172"
+                }
+            ],
+            "station_items": [{
+                    "location_item_id": 651490,
+                    "location_id": 1,
+                    "device_id": 2,
+                    "item": "air_temperature_humidity",
+                    "sort": 0,
+                    "station_id": 1,
+                    "station_item_id": 651490
+                }, {
+                    "location_item_id": 651492,
+                    "location_id": 1,
+                    "device_id": 2,
+                    "item": "barometric_pressure",
+                    "sort": 1,
+                    "station_id": 1,
+                    "station_item_id": 651492
+                }, {
+                    "location_item_id": 681122,
+                    "location_id": 1,
+                    "device_id": 2,
+                    "item": "diagnostics",
+                    "station_id": 1,
+                    "station_item_id": 681122
+                }, {
+                    "location_item_id": 681123,
+                    "location_id": 1,
+                    "device_id": 2,
+                    "item": "diagnostics",
+                    "station_id": 1,
+                    "station_item_id": 681123
+                }, {
+                    "location_item_id": 651494,
+                    "location_id": 1,
+                    "device_id": 2,
+                    "item": "light",
+                    "sort": 4,
+                    "station_id": 1,
+                    "station_item_id": 651494
+                }, {
+                    "location_item_id": 651491,
+                    "location_id": 1,
+                    "device_id": 2,
+                    "item": "lightning",
+                    "sort": 2,
+                    "station_id": 1,
+                    "station_item_id": 651491
+                }, {
+                    "location_item_id": 651493,
+                    "location_id": 1,
+                    "device_id": 2,
+                    "item": "rain",
+                    "sort": 5,
+                    "station_id": 1,
+                    "station_item_id": 651493
+                }, {
+                    "location_item_id": 651495,
+                    "location_id": 1,
+                    "device_id": 2,
+                    "item": "wind",
+                    "sort": 3,
+                    "station_id": 1,
+                    "station_item_id": 651495
+                }
+            ],
+            "is_local_mode": false
+        }
+    ],
+    "status": {
+        "status_code": 0,
+        "status_message": "SUCCESS"
+    }
+}
+                        </pre>
+                    </code>
+                </dd>   
+            </dl>
+
+        </li>
+    </ol>
 </script>
