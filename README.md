@@ -1,4 +1,4 @@
-# WeahterFlow Tempest nodes listening to UDP for Node-RED
+# WeahterFlow Tempest API client
 
 [![Platform](https://img.shields.io/badge/platform-Node--RED-red)](https://nodered.org)
 [![Platform](https://img.shields.io/badge/license-MIT-green)](https://github.com/CrunkA3/node-red-weatherflow-api-client/blob/master/LICENSE)
