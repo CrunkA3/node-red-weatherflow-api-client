@@ -22,7 +22,7 @@ module.exports = function (RED) {
             var stationId = RED.util.evaluateNodeProperty(node.station, node.stationType, node, msg);
 
             var query = '?station_id=' + stationId + '&token=' + node.client.token;
-            
+
             if (node.units_temp) query += '&units_temp=' + node.units_temp;
             if (node.units_wind) query += '&units_wind=' + node.units_wind;
             if (node.units_pressure) query += '&units_pressure=' + node.units_pressure;
@@ -43,6 +43,7 @@ module.exports = function (RED) {
 
                 response.on('end', function () {
                     msg.payload = JSON.parse(str);
+
                     if (msg.payload.status.status_code == 0) {
                         send(msg);
                         done();
@@ -53,12 +54,16 @@ module.exports = function (RED) {
                 });
             }
 
-            http
-                .request(options, callback)
-                .on("error", (e) => {
-                    done('problem with request: ${e.message}');
-                })
-                .end();
+            try {
+                http
+                    .request(options, callback)
+                    .on("error", (e) => {
+                        done('problem with request: ${e.message}');
+                    })
+                    .end();
+            } catch (error) {
+                done(error);
+            }
         });
     }
 
