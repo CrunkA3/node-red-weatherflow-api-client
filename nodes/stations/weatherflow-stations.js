@@ -34,12 +34,17 @@ module.exports = function (RED) {
                 });
             }
 
-            http
-                .request(options, callback)
-                .on("error", (e) => {
-                    done('problem with request: ${e.message}');
-                })
-                .end();
+            try {
+
+                http
+                    .request(options, callback)
+                    .on("error", (e) => {
+                        done('problem with request: ${e.message}');
+                    })
+                    .end();
+            } catch (error) {
+                done(error);
+            }
         });
     }
 
