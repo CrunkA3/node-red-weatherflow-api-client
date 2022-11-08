@@ -1,0 +1,135 @@
+<script type="text/javascript">
+    RED.nodes.registerType('observations-device', {
+        category: 'WeatherFlow',
+        color: '#c498cd',
+        inputs: 1,
+        outputs: 1,
+        defaults: {
+            client: { value: "", type: "weatherflow-client", required: true },
+            device: { value: "", required: true, validate: RED.validators.typedInput('deviceType') },
+            deviceType: { value: "" },
+        },
+        icon: "white-globe.svg",
+        label: function () {
+            return this.name || "WeatherFlow Observations (Device)";
+        },
+        paletteLabel: "Observations (Device)",
+        oneditprepare: function () {
+            $("#node-input-device").typedInput({
+                default: "msg",
+                types: ["msg", "str"],
+                typeField: "#node-input-deviceType"
+            });
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="observations-device">
+    <div class="form-row">
+        <label for="node-input-client"><i class="fa fa-tag"></i> Client</label>
+        <input type="text" id="node-input-client" placeholder="Client">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-device"><i class="fa fa-tag"></i> Device Id</label>
+        <input type="text" id="node-input-device" placeholder="Device Id">
+        <input type="hidden" id="node-input-deviceType">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-day_offset"><i class="fa fa-tag"></i> Day offset</label>
+        <input type="text" id="node-input-day_offset">
+    </div>
+    <div class="form-row">
+        <label for="node-input-time_start"><i class="fa fa-tag"></i> Time start</label>
+        <input type="text" id="node-input-time_start">
+    </div>
+    <div class="form-row">
+        <label for="node-input-time_start"><i class="fa fa-tag"></i> Time end</label>
+        <input type="text" id="node-input-time_start">
+    </div>
+</script>
+
+
+<script type="text/html" data-help-name="observations-device">
+    <p>Get observations for a Device(Air,Sky,Tempest) by using the device_id as the key. You can find device_id values in the response from the Stations service You can get observations using several filters (latest, time range, day offset).</p>
+    <p>Use the "type" value to determine the layout of the observations values. The "obs" object is an array of observations. Each observation is an array of observation values (see layout below).</p>
+    
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>Device Id <span class="property-type">long</span></dt>
+        <dd>ID of device</dd>
+        <dt>Day offset <span class="property-type">long</span></dt>
+        <dd>TIME FILTER - Get an entire day of observations by UTC day offset.
+            0 - Current day UTC
+            1 - Yesterday UTC
+        </dd>
+        <dt>Time start <span class="property-type">long</span></dt>
+        <dd>TIME FILTER - Time range start time epoch seconds UTC. Observation data at a one minute time resolution is available for a time range that is five days or less. You also need to send "time_end". This field pair is optional. If the request does not contain any time filters only the latest observation will be returned.</dd>
+    </dl>
+
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">json</span></dt>
+                <dd>the response message with the list of stations
+                    <code>
+                        <pre>
+{
+    "status": {
+        "status_code": 0,
+        "status_message": "SUCCESS"
+    },
+    "device_id": 59,
+    "type": "obs_st",
+    "source": "cache",
+    "summary": {
+        "pressure_trend": "steady",
+        "strike_count_1h": 0,
+        "strike_count_3h": 0,
+        "precip_total_1h": 0,
+        "strike_last_dist": 17,
+        "strike_last_epoch": 1665698515,
+        "precip_accum_local_yesterday": 0.322549,
+        "precip_analysis_type_yesterday": 0,
+        "feels_like": 10.5,
+        "heat_index": 10.5,
+        "wind_chill": 10.5
+    },
+    "obs": [
+        [
+            1667838361,
+            0.85,
+            0.93,
+            0.98,
+            149,
+            3,
+            814.5,
+            10.5,
+            86,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2.71,
+            1,
+            0,
+            null,
+            null,
+            0
+        ]
+    ]
+}
+                        </pre>
+                    </code>
+                </dd>   
+            </dl>
+
+        </li>
+    </ol>
+</script>

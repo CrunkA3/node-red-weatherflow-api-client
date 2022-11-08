@@ -17,7 +17,8 @@
         "nodes": {
             "weatherflow-client": "nodes/client/weatherflow-client.js",
             "weatherflow-stations": "nodes/stations/weatherflow-stations.js",
-            "weatherflow-forecast": "nodes/forecast/weatherflow-forecast.js"
+            "weatherflow-forecast": "nodes/forecast/weatherflow-forecast.js",
+            "observations-device": "nodes/observations-device/observations-device.js"
         }
     },
     "engines": {
