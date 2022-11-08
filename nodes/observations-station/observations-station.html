@@ -1,0 +1,163 @@
+<script type="text/javascript">
+    RED.nodes.registerType('observations-station', {
+        category: 'WeatherFlow',
+        color: '#c498cd',
+        inputs: 1,
+        outputs: 1,
+        defaults: {
+            client: { value: "", type: "weatherflow-client", required: true },
+            station: { value: "", required: true, validate: RED.validators.typedInput('stationType') },
+            stationType: { value: "" },
+        },
+        icon: "white-globe.svg",
+        label: function () {
+            return this.name || "WeatherFlow Observations (Station)";
+        },
+        paletteLabel: "Observations (Station)",
+        oneditprepare: function () {
+            $("#node-input-station").typedInput({
+                default: "msg",
+                types: ["msg", "str"],
+                typeField: "#node-input-stationType"
+            });
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="observations-station">
+    <div class="form-row">
+        <label for="node-input-client"><i class="fa fa-tag"></i> Client</label>
+        <input type="text" id="node-input-client" placeholder="Client">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-station"><i class="fa fa-tag"></i> Station Id</label>
+        <input type="text" id="node-input-station" placeholder="Station Id">
+        <input type="hidden" id="node-input-stationType">
+    </div>
+</script>
+
+
+<script type="text/html" data-help-name="observations-station">
+    <p>Get the latest federated observation for a Station. This observation is made from the latest Device observations that belong to the Station. If a user has multiple Devices of the same type they are able to designate one of them as primary. This is the one used to make the federated observation.</p>
+    <p>A user can also designate each device as either indoor or outdoor. All indoor observation value fields will end with an "_indoor" suffix. Outdoor observations fields do not have a suffix.</p>
+    <p>The station_units values represent the units of the Station's owner, not the units of the observation values in the API response.</p>
+    
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>Station Id <span class="property-type">long</span></dt>
+        <dd>ID of the station</dd>
+    </dl>
+
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">json</span></dt>
+                <dd>the response message with the observation data
+                    <code>
+                        <pre>
+{
+    "station_id": 78997,
+    "station_name": "Biberg",
+    "public_name": "Biberg",
+    "latitude": 48.89255,
+    "longitude": 11.41317,
+    "timezone": "Europe/Berlin",
+    "elevation": 495.5087585449219,
+    "is_public": true,
+    "status": {
+        "status_code": 0,
+        "status_message": "SUCCESS"
+    },
+    "station_units": {
+        "units_temp": "c",
+        "units_wind": "kph",
+        "units_precip": "mm",
+        "units_pressure": "mb",
+        "units_distance": "km",
+        "units_direction": "cardinal",
+        "units_other": "metric"
+    },
+    "outdoor_keys": [
+        "timestamp",
+        "air_temperature",
+        "barometric_pressure",
+        "station_pressure",
+        "pressure_trend",
+        "sea_level_pressure",
+        "relative_humidity",
+        "precip",
+        "precip_accum_last_1hr",
+        "precip_accum_local_day",
+        "precip_accum_local_yesterday",
+        "precip_minutes_local_day",
+        "precip_minutes_local_yesterday",
+        "wind_avg",
+        "wind_direction",
+        "wind_gust",
+        "wind_lull",
+        "solar_radiation",
+        "uv",
+        "brightness",
+        "lightning_strike_last_epoch",
+        "lightning_strike_last_distance",
+        "lightning_strike_count",
+        "lightning_strike_count_last_1hr",
+        "lightning_strike_count_last_3hr",
+        "feels_like",
+        "heat_index",
+        "wind_chill",
+        "dew_point",
+        "wet_bulb_temperature",
+        "wet_bulb_globe_temperature",
+        "delta_t",
+        "air_density"
+    ],
+    "obs": [
+        {
+            "timestamp": 1667921254,
+            "air_temperature": 10.9,
+            "barometric_pressure": 814.5,
+            "station_pressure": 814.5,
+            "sea_level_pressure": 866.2,
+            "relative_humidity": 78,
+            "precip": 0,
+            "precip_accum_last_1hr": 0,
+            "precip_accum_local_day": 0,
+            "precip_accum_local_yesterday": 0,
+            "precip_minutes_local_day": 0,
+            "precip_minutes_local_yesterday": 0,
+            "wind_avg": 1.2,
+            "wind_direction": 182,
+            "wind_gust": 1.4,
+            "wind_lull": 1,
+            "solar_radiation": 9,
+            "uv": 0.04,
+            "brightness": 1070,
+            "lightning_strike_last_epoch": 1665698515,
+            "lightning_strike_last_distance": 17,
+            "lightning_strike_count": 0,
+            "lightning_strike_count_last_1hr": 0,
+            "lightning_strike_count_last_3hr": 0,
+            "feels_like": 10.9,
+            "heat_index": 10.9,
+            "wind_chill": 10.9,
+            "dew_point": 7.2,
+            "wet_bulb_temperature": 8.8,
+            "wet_bulb_globe_temperature": 9.5,
+            "delta_t": 2.1,
+            "air_density": 0.99891,
+            "pressure_trend": "steady"
+        }
+    ]
+}
+                        </pre>
+                    </code>
+                </dd>   
+            </dl>
+
+        </li>
+    </ol>
+</script>
