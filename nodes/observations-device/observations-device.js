@@ -10,14 +10,21 @@ module.exports = function (RED) {
         node.client = RED.nodes.getNode(config.client);
         node.device = config.device;
         node.deviceType = config.deviceType;
+        node.dayOffset = config.dayOffset;
+        node.timeStart = config.timeStart;
+        node.timeEnd = config.timeEnd;
 
 
         node.on('input', function (msg, send, done) {
-            var input = this;
             var deviceId = RED.util.evaluateNodeProperty(node.device, node.deviceType, node, msg);
 
             var query = '?token=' + node.client.token;
 
+            if (node.dayOffset) query += "&day_offset=" + node.dayOffset;
+            if (node.timeStart) query += "&time_start=" + node.timeStart;
+            if (node.timeEnd) query += "&time_end=" + node.timeEnd;
+            node.debug(query);
+            
             var options = {
                 host: 'swd.weatherflow.com',
                 path: '/swd/rest/observations/device/' + deviceId + query

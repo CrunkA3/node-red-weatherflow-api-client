@@ -8,6 +8,9 @@
             client: { value: "", type: "weatherflow-client", required: true },
             device: { value: "", required: true, validate: RED.validators.typedInput('deviceType') },
             deviceType: { value: "" },
+            dayOffset: { value: "" },
+            timeStart: { value: "" },
+            timeEnd: { value: "" },
         },
         icon: "white-globe.svg",
         label: function () {
@@ -37,16 +40,16 @@
     </div>
 
     <div class="form-row">
-        <label for="node-input-day_offset"><i class="fa fa-tag"></i> Day offset</label>
-        <input type="text" id="node-input-day_offset">
+        <label for="node-input-dayOffset"><i class="fa fa-tag"></i> Day offset</label>
+        <input type="text" id="node-input-dayOffset">
     </div>
     <div class="form-row">
-        <label for="node-input-time_start"><i class="fa fa-tag"></i> Time start</label>
-        <input type="text" id="node-input-time_start">
+        <label for="node-input-timeStart"><i class="fa fa-tag"></i> Time start</label>
+        <input type="text" id="node-input-timeStart">
     </div>
     <div class="form-row">
-        <label for="node-input-time_start"><i class="fa fa-tag"></i> Time end</label>
-        <input type="text" id="node-input-time_start">
+        <label for="node-input-timeEnd"><i class="fa fa-tag"></i> Time end</label>
+        <input type="text" id="node-input-timeEnd">
     </div>
 </script>
 
