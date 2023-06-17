@@ -1,5 +1,3 @@
-const { stat } = require('fs');
-
 module.exports = function (RED) {
     var http = require('http');
 

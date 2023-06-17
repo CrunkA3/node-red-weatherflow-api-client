@@ -30,14 +30,18 @@ module.exports = function (RED) {
                 });
 
                 response.on('end', function () {
-                    msg.payload = JSON.parse(str);
+                    try {
+                        msg.payload = JSON.parse(str);
 
-                    if (msg.payload.status.status_code == 0) {
-                        send(msg);
-                        done();
-                    }
-                    else {
-                        done(msg);
+                        if (msg.payload.status.status_code == 0) {
+                            send(msg);
+                            done();
+                        }
+                        else {
+                            done(msg);
+                        }
+                    } catch (error) {
+                        done(error);
                     }
                 });
             }
