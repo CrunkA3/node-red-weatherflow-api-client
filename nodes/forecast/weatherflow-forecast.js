@@ -1,5 +1,5 @@
 module.exports = function (RED) {
-    var http = require('http');
+    var https = require('https');
 
     function WeatherFlowNode(config) {
         RED.nodes.createNode(this, config);
@@ -57,7 +57,7 @@ module.exports = function (RED) {
             }
 
             try {
-                http
+                https
                     .request(options, callback)
                     .on("error", (e) => {
                         done('problem with request: ${e.message}');
