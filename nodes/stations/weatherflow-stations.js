@@ -1,5 +1,5 @@
 module.exports = function (RED) {
-    var http = require('http');
+    var https = require('https');
 
     function WeatherFlowNode(config) {
         RED.nodes.createNode(this, config);
@@ -8,8 +8,6 @@ module.exports = function (RED) {
         node.client = RED.nodes.getNode(config.client);
 
         node.on('input', function (msg, send, done) {
-            var input = this;
-
             var options = {
                 host: 'swd.weatherflow.com',
                 path: '/swd/rest/stations?token=' + node.client.token
@@ -33,7 +31,7 @@ module.exports = function (RED) {
                             done(msg);
                         }
                     } catch (error) {
-                        done(error);
+                        done(error + '(' + str + ')');
                     }
 
                 });
@@ -41,7 +39,7 @@ module.exports = function (RED) {
 
             try {
 
-                http
+                https
                     .request(options, callback)
                     .on("error", (e) => {
                         done('problem with request: ${e.message}');
